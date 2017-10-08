@@ -194,9 +194,12 @@ def get_server_data():
                 'postalCode') + '</td>',
             '<td>' + order.get('toAddress', {}).get('name') + '<br>' + order.get('toAddress', {}).get(
                 'postalCode') + '</td>',
-            '<span id="rates"></span><br><span id="duties"></span><br>'
-            '<span id="shipment">Tracking: <b>%s</b> <br> <a id="downloadLink" class="%s" href="%s" target="_blank" type="application/octet-stream" download="%s.pdf" class="has-ripple">Download Label</a></span>' %
+            '<span id="rates" class="%s">Est. Rates: %s USD</span><br><span id="duties"></span><br>'
+            '<span id="shipment" class="%s">Tracking: <b>%s</b> <br> <a id="downloadLink" class="%s" href="%s" target="_blank" type="application/octet-stream" download="%s.pdf" class="has-ripple">Download Label</a></span>' %
             (
+                'hide' if not order.get('pb_info', {}).get('rates') else '',
+                order.get('pb_info', {}).get('rates', ''),
+                'hide' if not order.get('pb_info', {}).get('tracking_number') else '',
                 order.get('pb_info', {}).get('tracking_number', ''),
                 'hide' if not order.get('pb_info', {}).get('tracking_number') else '',
                 order.get('pb_info', {}).get('label', ''),
@@ -230,18 +233,19 @@ def duty_calculator():
     :return:
     """
     duty_info=request.get_json()
-    print duty_info
-    sender_country=str(COUNTRY_MAP_3_ISO.get(duty_info.get('fromAddress',{}).get('countryCode')))
-    receiver_country=str(COUNTRY_MAP_3_ISO.get(duty_info.get('toAddress',{}).get('countryCode')))
-    content=str(duty_info.get('content'))
-    duty=dutycalculator(sender_country.lower(),receiver_country.lower(),content)
-    duty_res=duty.dutycalculate()
-    sales_tax=duty_res.get('sales_tax') or 0
-    tax_break=duty_res.get('tax_break',{}) or 0
-    for i,j in tax_break.iteritems():
-        j+=str(j)
-    final_tax='sales_tax('+str(sales_tax)+') +'+j
-    return final_tax
+    # print duty_info
+    sender_country = str(COUNTRY_MAP_3_ISO.get(duty_info.get('fromAddress', {}).get('countryCode')))
+    receiver_country = str(COUNTRY_MAP_3_ISO.get(duty_info.get('toAddress', {}).get('countryCode')))
+    content = str(duty_info.get('content'))
+    duty = dutycalculator(sender_country.lower(), receiver_country.lower(), content)
+    duty_res = duty.dutycalculate()
+    final_tax = '-N.A-'
+    if duty_res and duty_res.get('status') == 200:
+        sales_tax = duty_res.get('sales_tax') or 0
+        tax_break = ', '.join(duty_res.get('tax_break', {}).values())
+        final_tax = 'sales_tax( %s )[ %s ]' % (str(sales_tax), tax_break)
+
+    return json.dumps({'final_tax': final_tax})
 
 @app.route('/create-shipment', methods=['POST'])
 def create_shipping_label():

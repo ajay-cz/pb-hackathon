@@ -20,19 +20,10 @@
             var table = $('#example').DataTable(config);
 
             $('#example tbody').on('click', 'tr', function(e) {
-                var self = $(this);
+                var self = $(this), order_info = $(this).find('#order_info').data('order');
                 // Fetch Rates
                 //$('#rates_btn').removeClass('disabled');
-                $('#duties_btn').removeClass('disabled');
-                // if($(this).find('#rates').val()){
-                $('#shipping_btn').removeClass('disabled');
-                //}
-                //			var order_info = {"_id":"31e6853a-aad2-49de-8dc3-8b9fada2b89d","store_type":"Prestashop","fromAddress":{"company":"Pitney Bowes Inc.","name":"sender_fname","phone":"2032032033","email":"sender@email.com","residential":true,"addressLines":["27 Waterview Drive"],"cityTown":"Shelton","stateProvince":"CT","postalCode":"06484","countryCode":"US","status":"NOT_CHANGED"},"toAddress":{"company":"Glorias Co.","name":"Peter","phone":"2222222222","email":"receiver@email.com","residential":true,"addressLines":["1 Sullivan SQ"],"cityTown":"Berwick","postalCode":"03901","countryCode":"US","status":"NOT_CHANGED"},"parcel":{"weight":{"unitOfMeasurement":"OZ","weight":1},"dimension":{"unitOfMeasurement":"IN","length":6,"width":0.25,"height":4,"irregularParcelGirth":0.002}}};
-                var order_info = $(this).find('#order_info').data('order');
-                console.log("non-working:");
-                console.log($(this).find('#order_info').data('order'));
-                console.log("working:");
-                console.log(order_info);
+
 
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
@@ -40,6 +31,15 @@
                     table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
+                if (table.$('tr.selected').length > 0) {
+                    $('#duties_btn').removeClass('disabled');
+                    $('#shipping_btn').removeClass('disabled');
+                }
+                else {
+                    $('#duties_btn').addClass('disabled');
+                    $('#shipping_btn').addClass('disabled');
+                }
+
                 // Create Shipment
                 $('#shipping_btn').off('click').on('click', function() {
                     $('#progress').toggleClass('hide');
@@ -73,6 +73,7 @@
                     //	$(self).closest('#shipment').val('labels');
                     //})
                 })
+
                 // Calculate Duties
                 $('#duties_btn').off('click').on('click', function() {
                     $('#progress').toggleClass('hide');
@@ -84,6 +85,12 @@
                         contentType: "application/json",
                         success: function(result, status, jqXHR) {
                             $('#progress').toggleClass('hide');
+                            if(result && result.final_tax) {
+                                $(self).find('#duties').html("Est. Duties " + result.final_tax);
+                            }
+                            else {
+                                $(self).find('#duties').html("Est. Duties " + result.final_tax);
+                            }
                             //Do something
                         },
                         error(jqXHR, textStatus, errorThrown) {
@@ -103,7 +110,7 @@
                     //	$(self).closest('#shipment').val('labels');
                     //})
                 })
-                console.log(e);
+//                console.log(e);
             });
 
             //$('#button').click( function () {

@@ -94,4 +94,4 @@ class dutycalculator:
 if __name__ == '__main__':
     apple = dutycalculator('usa', 'ind', 'waterbottle')
     mango = apple.dutycalculate()
-    print mango
+    print ', '.join(mango.get('tax_break', {}).values())
