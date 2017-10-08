@@ -1,0 +1,57 @@
+<ul class="collapsible popout" data-collapsible="accordion">
+	{%- set count = store_settings.count()  -%}
+	{%- if not store_settings or  count < 1 -%}
+		{%- set store_settings = [{"_id" : "1", "store_url" : "","consumer_secret" : "","store_type" : "woocommerce", "consumer_key": ""},{"_id" : "2","store_url" : "","consumer_secret" : "","store_type" : "prestashop", "consumer_key": ""},{"_id" : "3","store_url" : "","consumer_secret" : "","store_type" : "shopify", "consumer_key": ""}, {"_id" : "4","store_url" : "","consumer_secret" : "","store_type" : "opencart", "consumer_key": ""}] -%}
+	{%- endif -%}
+	<!-- Generic Rendering of the Settings Form -->
+	{%- for store_setting in store_settings|sort(attribute='_id') -%}
+		<li>
+			<div class="collapsible-header">{{store_setting.store_type|title }}</div>
+			<div class="collapsible-body">
+				<div class="row">
+					<form class="col s12" role="form" name="settings" id="settings" action="/settings/channel-settings"
+						  method="POST">
+						<input type="hidden" name="store_type" value="{{store_setting.store_type|lower }}">
+						<input type="hidden" name="store_order" value="{{store_setting._id }}">
+						<input type="hidden" name="_id" value="{{store_setting._id }}">
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="store_url" name="store_url" type="text" class="validate"
+									   value="{{store_setting.store_url|default('')}}">
+								<label for="store_url">Store URL</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s6">
+								<input id="consumer_key" name="consumer_key" type="text" class="validate"
+									   value="{{store_setting.consumer_key|default('')}}">
+								<label for="consumer_key">Consumer Key</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="consumer_secret" name="consumer_secret" type="text" class="validate"
+									   value="{{store_setting.consumer_secret|default('')}}">
+								<label for="consumer_secret">Consumer Secret</label>
+							</div>
+						</div>
+						<div class="row col s12 center-align">
+							<button class="btn waves-effect waves-light center-align" type="submit">Save
+								<i class="material-icons right">save</i></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</li>
+	{%- endfor -%}
+	{%- if store_settings and count > 0 -%}
+		<li>
+		  <div class="collapsible-header">Shopify</div>
+		  <div class="collapsible-body"><div class="center-align">Coming Soon !</div></div>
+		</li>
+		<li>
+		  <div class="collapsible-header">Opencart</div>
+		  <div class="collapsible-body">
+			  <div class="center-align">Coming Soon !</div>
+		  </div>
+		</li>
+	{%- endif -%}
+</ul>

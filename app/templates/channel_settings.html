@@ -1,0 +1,10 @@
+{% extends "settings.html" %}
+
+{% block settings -%}
+    <h5 class="center-align">Channel Settings</h5>
+    <div class="container">
+    {% with store_settings=store_settings %}
+    {% include "_settings_box.html" %}
+    {% endwith %}
+</div>
+{%- endblock settings -%}

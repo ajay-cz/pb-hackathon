@@ -1,0 +1,131 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+.brand-logo img {
+    width: 75px;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+
+
+# Custom Styles
+
+/* label color */
+   .input-field label {
+     color: #546e7a;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #546e7a;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #546e7a;
+     box-shadow: 0 1px 0 0 #546e7a;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #546e7a;
+     box-shadow: 0 1px 0 0 #546e7a;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #546e7a;
+     box-shadow: 0 1px 0 0 #546e7a;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #546e7a;
+   }
+
+   [type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+        background-color: #546e7a !important;
+        border-color: #546e7a !important;
+   }
+
+.label-left {
+    font-size: 1em;
+    float: left;
+}
+
+.label-right {
+    font-weight: bold;
+    float: right;
+}
+
+.fix-side-nav {
+    position: fixed !important;
+}
+.main-panel {
+    margin-left: 33.3333333333% !important;
+}
+
+datalist {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.shown {
+    display: block !important;
+}
+
+.header-label {
+    font-size: 0.7em;
+}

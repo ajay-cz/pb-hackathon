@@ -1,0 +1,86 @@
+{% extends "settings.html" %}
+{% block settings -%}
+    <h5 class="center-align">Warehouse Settings</h5>
+    <div class="container">
+    <ul class="collapsible" data-collapsible="accordion">
+	{%- for warehouse_setting in warehouse_settings -%}
+		<li>
+			<div class="collapsible-header active">
+				<center>Warehouse Address 1</center>
+			</div>
+			<div class="collapsible-body">
+				{%- set warehouse = warehouse_setting.fromAddress or {} -%}
+				<div class="row">
+					<form class="col s12" role="form" name="warehouse-settings" id="warehouse-settings"
+						  action="/settings/warehouse-settings" method="POST">
+						<div class="row">
+							<div class="input-field col s6">
+								<input id="name" name="name" type="text" class="validate"
+									   value="{{warehouse.name|default('')}}">
+								<label for="name">Name</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="company" name="company" type="text" class="validate"
+									   value="{{warehouse.company|default('')}}">
+								<label for="company">Company</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s3">
+								<input id="phone" name="phone" type="tel" class="validate"
+									   value="{{warehouse.phone|default('')}}">
+								<label for="phone">Phone</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="email" name="email" type="email" class="validate"
+									   value="{{warehouse.email|default('')}}">
+								<label for="billing_email">email</label>
+							</div>
+							<div class="input-field col s3">
+								<input id="postalCode" name="postalCode" type="text" class="validate"
+									   value="{{warehouse.postalCode|default('')}}">
+								<label for="postalCode">Postcode</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s4">
+									<input id="cityTown" name="cityTown" type="text" class="validate"
+									   value="{{warehouse.cityTown|default('')}}">
+									<label for="postalCode">city</label>
+							</div>
+							<div class="input-field col s4">
+								<select name="stateProvince">
+									<option disabled>state_province</option>
+									{%- for i in state_province -%}
+										<option value="{{i.1}}" {% if warehouse.stateProvince == i.1 %}selected{% endif %} >{{i.0}}</option>
+									{%- endfor -%}
+								</select>
+							</div>
+							<div class="input-field col s4">
+								<input id="countryCode_dummy" name="countryCode_dummy" type="text" class="validate" value="US" disabled>
+								<input id="countryCode" name="countryCode" type="hidden" class="validate" value="US">
+								<input id="residential" name="residential" type="hidden" class="validate" value="true">
+								<label for="countryCode">Country</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="addressLines" name="addressLines" type="text" maxlength="60" class="validate"
+									   value="{%- if warehouse.addressLines -%}{{warehouse.addressLines[0]|default('')}} {%- else -%} {%- endif -%}">
+								<label for="textarea1">Address</label>
+							</div>
+						</div>
+						<div class="row col s12">
+							<center>
+								<button class="btn waves-effect waves-light" type="submit">Save
+									<i class="material-icons right">save</i></button>
+							</center>
+						</div>
+					</form>
+				</div>
+			</div>
+		</li>
+	{%- endfor -%}
+</ul>
+</div>
+{%- endblock settings -%}

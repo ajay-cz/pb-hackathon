@@ -1,0 +1,43 @@
+{% extends "base_template.html" %}
+
+{%- block container -%}
+	<div class="container-fluid">
+	<h3 class="center-align">Orders</h3>
+	<div class="row">
+		<form class="col s12" role="form" name="sync-orders" id="sync-orders" action="/sync-orders" method="POST">
+			<button class="btn waves-effect waves-light" type="submit">Sync All<i class="material-icons right">autorenew</i></button>
+			<a class="btn waves-effect waves-light" type="button" href="/remove-orders" target="_self" title="<sup>For Demo</sup>">Remove All<i class="material-icons right">delete</i></a>
+		</form>
+	</div>
+	<div class="col s12">
+
+		<div id="row right" style="float: right;">
+			<!--<a class="waves-effect waves-light btn-large disabled " id="rates_btn">Rates</a>-->
+			<a class="waves-effect waves-light btn-large disabled" id="shipping_btn">Shipping Label</a>
+			<a class="waves-effect waves-light btn-large disabled" id="duties_btn">Estimate Duties</a>
+		</div>
+		<table class='display table' id='example' cellspacing="0" width="100%">
+			<thead>
+			<tr>
+				{% for col in columns %}
+				<th>{{ col }}</th>
+				{% endfor %}
+			</tr>
+			</thead>
+			<tbody>
+				{%- if error_list -%}
+					{%- for err in error_list -%}
+						{{ err }}
+					{%- endfor -%}
+				{%- endif -%}
+			</tbody>
+		</table>
+	</div>
+</div>
+{%- endblock -%}
+
+{%- block scripts -%}
+  <!--  Scripts-->
+    {{ super() }}
+<script src="/static/js/dashboard.js?v=0.224"></script>
+{%- endblock -%}

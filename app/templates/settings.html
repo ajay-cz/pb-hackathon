@@ -1,0 +1,45 @@
+{% extends "base_template.html" %}
+{%- block container -%}
+    <div class="container">
+    <h3>Settings</h3>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s2">
+                    <a target="_parent" href="/settings"
+                       class="{%- if '/settings' == request.path -%}active{%- endif -%}">Configure Channel & Shipper
+                        Settings</a>
+                </li>
+                <li class="tab col s2">
+                    <a target="_self" href="/settings/channel-settings"
+                       class="{%- if '/settings/channel-settings' == request.path -%}active{%- endif -%}">Setup
+                        Channels</a>
+                </li>
+                <li class="tab col s2">
+                    <a target="_self" href="/settings/shipper-settings"
+                       class="{%- if '/settings/shipper-settings' == request.path -%}active{%- endif -%}">Setup
+                        Shippers</a>
+                </li>
+                <li class="tab col s2">
+                    <a target="_self" href="/settings/warehouse-settings"
+                       class="{%- if '/settings/warehouse-settings' == request.path -%}active{%- endif -%}">Warehouse address</a>
+                </li>
+                <li class="tab col s2">
+                    <a target="_self" href="/settings/erpnext-settings"
+                       class="{%- if '/settings/erpnext-settings' == request.path -%}active{%- endif -%}">ErpNext Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {%- if '/settings' == request.path -%}
+        <div id="desc" class="col s12 center-align">
+            <h5>Kindly configure the Sales Channels & Shipper Accounts</h5>
+            <div class="container">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+        </div>
+        {%- endif -%}
+        <div id="test1" class="col s12">{% block settings -%}{%- endblock -%}</div>
+    </div>
+</div>
+{%- endblock -%}

@@ -1,0 +1,59 @@
+{% extends "base_template.html" %}
+
+{%- block container -%}
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br>
+            {# <h1 class="header center teal-text text-lighten-2">PB eCommerce</h1> #}
+            <div class="row center">
+                <h5 class="header col s12 light">Hello! Welcome to PB eCommerce Demo</h5>
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+    <div class="parallax"><img src="https://hackerearth-media.global.ssl.fastly.net/media/hackathon/global-csd-hackathon-2017/images/bfc0c7c6a3-hackathon_cover_image_27sep.jpg" alt="PB Hackathon"
+                               style="display: block; transform: translate3d(-50%, 329px, 0px);"></div>
+</div>
+<div class="container">
+    <div class="section">
+        <div class="row">
+            {%- if store_settings -%}
+            <button data-target="channel_modal" class="btn modal-trigger">Sync Channels</button>
+            <!-- Modal Structure -->
+            <div id="channel_modal" class="modal">
+                <div class="modal-content">
+                    <h4>Sync Sales Channel</h4>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <form class="col s12" role="form" name="sync-orders" id="sync-orders" action="/sync-orders" method="POST">
+                            {% for setting in store_settings %}
+                                <p>
+                                    <input type="checkbox" id="{{setting.store_type|lower}}" name="{{setting.store_type|lower}}" class="filled-in" id="filled-in-box" />
+                                    <label for="{{setting.store_type|lower}}">{{setting.store_type}}</label>
+                                </p>
+                            {% endfor %}
+                                <button class="btn waves-effect waves-light" type="submit">Sync
+					                <i class="material-icons right">autorenew</i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%- else -%}
+                <a class="waves-effect waves-light btn" href="/settings">Settings</a>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{%- endblock -%}
+{%- block scripts -%}
+    {{ super() }}
+    <script>
+    $(document).ready(function() {
+
+    });
+    </script>
+{%- endblock -%}

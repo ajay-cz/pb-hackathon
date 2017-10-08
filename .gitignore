@@ -1,0 +1,6 @@
+/data
+/Include
+/Lib
+/Scripts
+*.pyc
+/.idea
