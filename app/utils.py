@@ -71,6 +71,29 @@ class BaseDataTables:
         self.cardinality_filtered = len(self.result_data)
         self.cardinality = len(self.result_data)
 
+def flatten_address(addr):
+    """
+
+    :param addre:
+    :return:
+    """
+    if not addr:
+        return ''
+
+    address = '%(name)s <br>%(email)s %(phone)s<br>%(company)s %(address)s <br>%(city)s %(country)s %(postcode)s' %  \
+              {
+                  'name':addr.get('name', ''),
+                  'email':addr.get('email', ''),
+                  'phone':addr.get('phone', ''),
+                  'company':addr.get('company', ''),
+                  'address':','.join(addr.get('addressLines', [])),
+                  'city':addr.get('cityTown', ''),
+                  'country':addr.get('countryCode', ''),
+                  'postcode':addr.get('postalCode', '')
+              }
+    # print(address)
+    return address
+
 
 # https://www.willmcgugan.com/blog/tech/post/timed-caching-decorator/
 def timed_cache(seconds=0, minutes=0, hours=0, days=0):

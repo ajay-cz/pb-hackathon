@@ -10,7 +10,7 @@ from app.integrations.channels.woo_commerce import WoocommerceOrders
 from app.integrations.channels.prestashop import PrestashopOrders
 from app.integrations.chatbot.ecourierz import track_order, Bot
 from app.integrations.shippers.pb import fetch_shipping_rates, create_shipment
-from app.utils import BaseDataTables, asbool
+from app.utils import BaseDataTables, asbool, flatten_address
 from app.integrations.duty_calculator import *
 from app.integrations.duty_calculator.duty_calculator import dutycalculator
 from app.libs.pbshipping.tutorial_rest import *
@@ -190,10 +190,10 @@ def get_server_data():
             order.get('store_type'),
             '<div id="order_info" data-order=\'%s\'>%s</div>' % (json.dumps(order), str(order.get('order_id'))),
             '<tr><td>' + order.get('order_created') + '<br>' + str(order.get('product_value')) + ' INR</td>',
-            '<td>' + order.get('fromAddress', {}).get('name') + '<br>' + order.get('fromAddress', {}).get(
-                'postalCode') + '</td>',
-            '<td>' + order.get('toAddress', {}).get('name') + '<br>' + order.get('toAddress', {}).get(
-                'postalCode') + '</td>',
+            '<tr><td>' + flatten_address(order.get('fromAddress', {})) + ' INR</td>',
+            '<tr><td>' + flatten_address(order.get('toAddress', {})) + ' INR</td>',
+            # '<td>' + ','.join("%s" % val for (key, val) in order.get('fromAddress', {}).iteritems()) + '</td>',
+            # '<td>' +  ','.join("%s" % val for (key,val) in order.get('toAddress', {}).iteritems()) + '</td>',
             '<span id="rates" class="%s">Est. Rates: %s USD</span><br><span id="duties"></span><br>'
             '<span id="shipment" class="%s">Tracking: <b>%s</b> <br> <a id="downloadLink" class="%s" href="%s" target="_blank" type="application/octet-stream" download="%s.pdf" class="has-ripple">Download Label</a></span>' %
             (
@@ -274,6 +274,7 @@ def create_shipping_label():
     # "label" : "https://web-prt3.gcs.pitneybowes.com/usps/325584758/outbound/label/d469a1db4f2b4d4c862fc2d43cb3267e.pdf"
     # }
 
+# TODO: socketio
 @app.route('/send-message', methods=['POST'])
 def send_message():
     """
