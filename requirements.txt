@@ -13,7 +13,7 @@ ordereddict==1.1
 pbshipping==1.0.6
 prestapyt==0.8.0
 pymongo==3.5.1
-python-engineio==1.7.0
+python-engineio==3.8.2.post1
 python-socketio==1.8.1
 requests==2.18.4
 six==1.11.0
