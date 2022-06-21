@@ -8,7 +8,7 @@ idna==2.6
 itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
-numpy==1.13.3
+numpy==1.22.0
 ordereddict==1.1
 pbshipping==1.0.6
 prestapyt==0.8.0
