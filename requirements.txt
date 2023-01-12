@@ -17,7 +17,7 @@ python-engineio==1.7.0
 python-socketio==1.8.1
 requests==2.18.4
 six==1.11.0
-ujson==1.35
+ujson==5.4.0
 urllib3==1.22
 Werkzeug==0.12.2
 WooCommerce==1.2.1
